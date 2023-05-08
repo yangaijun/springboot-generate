@@ -1,0 +1,55 @@
+package ${package};
+
+import lombok.Data;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+<%
+	once = false;
+    var importArray = [];
+    for(column in columns){
+    	if(column.columnName == logicName && !once){
+            println("import com.baomidou.mybatisplus.annotations.TableLogic;");
+            once = true;
+        } 
+        if (array.contain(importArray, column.fieldType)) {
+                continue;
+        }
+        if (strutil.endWith(column.fieldType, "BigDecimal")){
+            println("import java.math.BigDecimal;");
+        } else if(strutil.endWith(column.fieldType,"Date")){
+            println("import java.util.Date;");
+        }
+        array.add(importArray, column.fieldType); 
+    }
+%>
+
+<% var date = date(); %>
+/*
+ * @Description: ${tableComment}
+ * @date: ${ date , dateFormat="yyyy-MM-dd"}
+ */
+@Data
+@TableName(value = "${tableName}")
+public class ${entityName}${poSuffix} {
+    <%
+        var once = false;
+        for(column in columns) {
+        
+           println('    /*');
+           var comments = strutil.split(column.columnComment,'\n');
+           for(var i = 0; i < comments.~size; i ++){
+             println('    *' + comments[i]);
+           }
+           println('    */');
+           
+           if (column.columnKey == 'PRI' && !once) {
+                println('    @TableId' );
+                once = true;
+           }
+           if(column.columnName == logicName){
+                println('    @TableLogic' );
+           }
+           print('    private ' + column.fieldType + ' ' + column.entityColumnName + ';\n');
+       } 
+    %>
+}

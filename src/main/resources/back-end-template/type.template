@@ -1,0 +1,24 @@
+package ${package};
+
+<% var date = date(); %>
+/*
+ * @Description: ${columnComment}
+ * @date: ${ date , dateFormat="yyyy-MM-dd"}
+ */
+public interface ${typeName} {
+    <%
+        for(item in items){
+            if(item.error==null){
+                println('    /*');
+                println('     *'+item.describe);
+                println('     */');
+                println('    public static final int '+item.key+' = '+item.value+';');
+            }else{
+                println('!!!'+item.error+'!!!');
+            }
+        }
+    %>
+}@status 1:12,2:23,12:23,ttest:123, @type dajkl
+
+@status
+1:  开发中//

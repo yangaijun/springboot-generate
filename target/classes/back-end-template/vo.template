@@ -1,0 +1,41 @@
+package ${package};
+
+import lombok.Data;
+import com.light.common.pojo.PageParam;
+<%
+	once = false;
+    var importArray = [];
+    for(column in columns){
+        if (array.contain(importArray, column.fieldType)) {
+                continue;
+        }
+        if (strutil.endWith(column.fieldType, "BigDecimal")){
+            println("import java.math.BigDecimal;");
+        } else if(strutil.endWith(column.fieldType,"Date")){
+            println("import java.util.Date;");
+        }
+        array.add(importArray, column.fieldType);
+    }
+%>
+
+<% var date = date(); %>
+/*
+ * @Description: ${tableComment}
+ * @date: ${ date , dateFormat="yyyy-MM-dd"}
+ */
+@Data
+public class ${entityName}${voSuffix} extends PageParam {
+    <%
+        var once = false;
+        for(column in columns) {
+        
+           println('    /*');
+           var comments = strutil.split(column.columnComment,'\n');
+           for(var i = 0; i < comments.~size; i ++){
+             println('    *' + comments[i]);
+           }
+           println('    */');
+           print('    private ' + column.fieldType + ' ' + column.entityColumnName + ';\n');
+       }
+    %>
+}
