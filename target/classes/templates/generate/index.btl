@@ -12,12 +12,14 @@
 </style>
 <body>
 	<h1> 欢迎使用 Light 代码一键生成器 </h1>
-	<div style="min-width: 400px">
+	<div style="min-width: 450px">
 	    <div>
     	    <input type="button" style="margin-right:45px" onclick="selectReverse()" value="反选">
-    	    <input type="button" value="提交并生成" onclick="document.tableForm.submit()">
+    	    <input type="button" value="提交并生成代码" onclick="document.tableForm.submit()">
     	</div>
-	    <div style="margin-top: 12px;margin-bottom: 2px"> 请选择要生成的数据表：</div>
+	    <div style="margin-top: 12px;margin-bottom: 2px">
+	        <b>请选择要生成的数据表：</b>
+	    </div>
 	    <form name="tableForm" method="post" action="index">
             <%
                 for(tableName in tableNames){
