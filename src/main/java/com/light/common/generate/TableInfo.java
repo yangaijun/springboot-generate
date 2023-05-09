@@ -13,8 +13,6 @@ public class TableInfo {
     private String tableComment;
 
     private List<ColumnInfo> columns;
-
-    private Map<String, String> status;
-
+    //字段枚举
     private Map<String, String> type;
 }

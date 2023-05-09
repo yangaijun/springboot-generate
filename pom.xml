@@ -53,8 +53,8 @@
         <!-- https://mvnrepository.com/artifact/com.ibeetl/beetl -->
         <dependency>
             <groupId>com.ibeetl</groupId>
-            <artifactId>beetl</artifactId>
-            <version>3.15.4.RELEASE</version>
+            <artifactId>beetl-springboot-starter-jdk17</artifactId>
+            <version>3.15.0.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -72,5 +72,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

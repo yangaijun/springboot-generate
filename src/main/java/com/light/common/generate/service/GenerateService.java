@@ -17,7 +17,10 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 @Service
 public class GenerateService {
     @Autowired
@@ -140,29 +143,22 @@ public class GenerateService {
                     return columnInfo;
                 }
             });
-//			Map<String, String> status = new HashMap<>();
+            TableInfo tableInfo = new TableInfo();
+            //从注释中解出枚举类型
 //			Map<String, String> type = new HashMap<>();
 //			for (ColumnInfo column: columns) {
 //				if (column.getColumnComment() != null) {
-//					if (column.getColumnComment().indexOf(Config.statusStartName) >= 0) {
-//						int end = column.getColumnComment().indexOf(Config.statusStartName) + Config.statusStartName.length();
-//						String columnStatus = column.getColumnComment().substring(end).replaceAll(" ", "");
-//						status.put(column.getColumnName(), columnStatus);
-//					} else if (column.getColumnComment().indexOf(Config.typeStartName) >= 0) {
-//						int end = column.getColumnComment().indexOf(Config.typeStartName) + Config.typeStartName.length();
+//					if (column.getColumnComment().indexOf(Config.typeStartString) >= 0) {
+//						int end = column.getColumnComment().indexOf(Config.typeStartString) + Config.typeStartString.length();
 //						String columnType = column.getColumnComment().substring(end).replaceAll(" ", "");
 //						type.put(column.getColumnName(), columnType);
 //					}
 //				}
 //			}
-//			if (status.size() > 0) {
-//				tableInfo.setStatus(status);
-//			}
-//			if (type.size() > 0) {
-//				tableInfo.setType(type);
-//			}
+//            if (!type.isEmpty()) {
+//                tableInfo.setType(type);
+//            }
 
-            TableInfo tableInfo = new TableInfo();
             tableInfo.setTableName(tableName);
             tableInfo.setColumns(columns);
 
@@ -171,24 +167,24 @@ public class GenerateService {
         return tableInfoList;
     }
 
-    public void generation(String basePath, String schema, List<String> tableNames) throws IOException {
-        ClasspathResourceLoader resourceLoader = new ClasspathResourceLoader("back-end-template");
+    public void generation(String filePath, String comPath, String schema, List<String> tableNames) throws IOException {
+        ClasspathResourceLoader resourceLoader = new ClasspathResourceLoader("beetl-back-end");
         Configuration cfg = Configuration.defaultConfiguration();
         GroupTemplate gt = new GroupTemplate(resourceLoader, cfg);
 
         List<TableInfo> tableInfoList = getTableInfoList(schema, tableNames);
 
-        String comPath = "com.light.buss";
-
+        System.out.println("generate start");
         for (TableInfo tableInfo: tableInfoList) {
-            doPo(gt, tableInfo, comPath, basePath);
-            doVo(gt, tableInfo, comPath, basePath);
+            doPo(gt, tableInfo, comPath, filePath);
+            doVo(gt, tableInfo, comPath, filePath);
 
-            doMapperJava(gt, tableInfo, comPath, basePath);
-            doMapperXml(gt, tableInfo, comPath, basePath);
+            doMapperJava(gt, tableInfo, comPath, filePath);
+            doMapperXml(gt, tableInfo, comPath, filePath);
 
-            doService(gt, tableInfo, comPath, basePath);
-            doController(gt, tableInfo, comPath, basePath);
+            doService(gt, tableInfo, comPath, filePath);
+            doController(gt, tableInfo, comPath, filePath);
         }
+        System.out.println("generate over");
     }
 }

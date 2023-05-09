@@ -10,6 +10,10 @@ public class Config {
     public static String voFolderName = "vo";
     public static String voSuffix = "VO";
     public static boolean voOnUpdateOverWrite = true;
+    //以什么字符串开始就是枚举
+    public static String typeStartString = "\n";
+    //分割符号
+    public static String typeSplitString;
     public static String mapperFolderName = "mapper";
     public static String mapperSuffix = "Mapper";
     public static boolean mapperXmlOnUpdateOverWrite = true;

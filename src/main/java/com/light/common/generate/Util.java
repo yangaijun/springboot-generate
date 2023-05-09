@@ -84,12 +84,14 @@ public class Util {
         try {
             if(!file.exists()) {
                 file.createNewFile();
-            } else if (override) {
+            } else if (file.exists() && !override) {
                 return;
             }
 
             OutputStream os = new FileOutputStream(file);
             t.renderTo(os);
+
+            System.out.println(file.getAbsolutePath());
         } catch (Exception e) {
             e.printStackTrace();
         }
