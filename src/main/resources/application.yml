@@ -6,6 +6,10 @@ log:
   path: /data/testLog
   level: log
   fileName: testLog
+auth:
+  open: true
+  tokenName: token
+  passPaths: /sys/login  #多个以逗号分割 /sys/login, /user/get, ...
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf8&useSSL=false

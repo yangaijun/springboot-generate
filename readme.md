@@ -21,14 +21,45 @@
    TEST_ERROR(1001, "test error")
    //在方法中使用
    throw new BusinessException(BusinessExceptionErrorEnum.TEST_ERROR)
-   ```
+
+### 验权
+1. 配置在 `application.yml` 中的 `auth` 下，项目只实现了简易验权，如需要结合`redis`缓存可以修改 `com.light.common.config.interceptor.AuthFilter` 方法
+   ```java
+   open: true/false  打开/关闭 验权
+   tokenName: string 读取 header 中的令牌的名称
+   passPaths: string, string  不验权的路径，多个以英文逗号分割，如： /user/login, /user/register
+2. 登录，在 `com.light.test.LoginController` 简单的搭配了一个登录接口，来配置验权功能，实际开发登录后删除此控制器即可，具体如下：
+   ```java
+   @RequestMapping(value="/sys")
+   public class LoginController {
+      @Data
+      public static class SysUser {
+         private String name;
+         private String password;
+      }
+   
+      @RequestMapping(value="/login", method= RequestMethod.POST)
+      public Object login(
+              @RequestBody SysUser user) {
+   
+         if (user.getName() != null && user.getName().equals("admin")
+                 && user.getPassword() != null && user.getPassword().equals("123456")
+         ) {
+            return TokenUtil.createToken(1);
+         }
+   
+         throw new BusinessException(BusinessExceptionErrorEnum.USER_NAME_OR_PASSWORD_ERROR);
+      }
+   }
+   
 ### 返回数据结构（ResponseData）
+
 1. `com.light.common.response`下，会将 `com.light.common.business`下返回的数据封装为 `ResponseData`对象:
    ```java
    private Integer code;
    private String message;
    private T data;
-   ```
+  
 2. 使用，`com.light.common.business` 的 `controller` 方法中：
    ```java
    @RequestMapping(value="/testResponse", method=RequestMethod.GET)
@@ -38,4 +69,4 @@
    //前端接收到的数据：{"code":0,"message":"调用成功！","data":"hello"}
    //异常返回直接抛异常即可
    throw new BusinessException(BusinessExceptionErrorEnum.TEST_ERROR)
-   ```
+  

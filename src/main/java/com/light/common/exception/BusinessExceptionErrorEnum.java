@@ -2,7 +2,10 @@ package com.light.common.exception;
 
 public enum BusinessExceptionErrorEnum  {
 	SYSTEM_ERROR(10000, "服务器处理异常！"),
-	TEST_ERROR(1001, "test error");
+	TOKEN_EXPIRED(10001, "token 不合法！"),
+	TOKEN_PARSE_ERROR(10002, "token 解析失败！"),
+
+	USER_NAME_OR_PASSWORD_ERROR(20001, "用户名或密码错误！");
 	private int code;
 	private String message;
 	
