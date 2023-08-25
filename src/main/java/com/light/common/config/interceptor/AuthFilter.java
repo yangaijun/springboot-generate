@@ -10,7 +10,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -28,6 +27,11 @@ public class AuthFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
+        if (request.getMethod().equals("OPTIONS")) {
+            response.setStatus(HttpServletResponse.SC_OK);
+            chain.doFilter(request, response);
+            return;
+        }
         if (open) {
             String urlPath = request.getServletPath();
             String[] paths = passPaths.split(",");
@@ -42,6 +46,8 @@ public class AuthFilter extends OncePerRequestFilter {
 
             String authToken = request.getHeader(tokenName);
             Integer userId = TokenUtil.getUserId(authToken);
+
+            System.out.println(authToken);
 
             if (!TokenUtil.isValid(authToken)) {
                 throw new BusinessException(BusinessExceptionErrorEnum.TOKEN_EXPIRED);

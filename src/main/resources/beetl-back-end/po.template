@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
     var importArray = [];
     for(column in columns){
     	if(column.columnName == logicName && !once){
-            println("import com.baomidou.mybatisplus.annotations.TableLogic;");
+            println("import com.baomidou.mybatisplus.annotation.TableLogic;");
             once = true;
         } 
         if (array.contain(importArray, column.fieldType)) {

@@ -19,15 +19,17 @@ public class WebConfig extends WebMvcConfigurationSupport {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new WebIntercepter())
-                .addPathPatterns("/**")
-                .excludePathPatterns("/sys/login");
+                .addPathPatterns("/**");
+        super.addInterceptors(registry);
     }
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
+                // 是否发送 Cookie
+                .allowCredentials(true)
                 // 放行哪些原始域
-                .allowedOrigins("*")
+                .allowedOriginPatterns("*")
                 // 放行哪些请求方式
                 .allowedMethods("*")
                 // 放行哪些原始请求头部信息
