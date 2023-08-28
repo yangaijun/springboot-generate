@@ -33,7 +33,8 @@ public class WebConfig extends WebMvcConfigurationSupport {
                 // 放行哪些请求方式
                 .allowedMethods("*")
                 // 放行哪些原始请求头部信息
-                .allowedHeaders("*");
+                .allowedHeaders("*")
+                .exposedHeaders("*");
     }
 
     @Bean

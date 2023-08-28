@@ -27,12 +27,7 @@ public class AuthFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-        if (request.getMethod().equals("OPTIONS")) {
-            response.setStatus(HttpServletResponse.SC_OK);
-            chain.doFilter(request, response);
-            return;
-        }
-        if (open) {
+        if (open && !request.getMethod().equals("OPTIONS")) {
             String urlPath = request.getServletPath();
             String[] paths = passPaths.split(",");
             PathMatcher matcher = new AntPathMatcher();

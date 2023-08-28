@@ -7,7 +7,7 @@ log:
   level: log
   fileName: testLog
 auth:
-  open: true
+  open: false
   tokenName: token
   passPaths: /generate/index, /sys/login  #多个以逗号分割 /sys/login, /user/get, ...
 spring:

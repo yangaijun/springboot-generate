@@ -19,7 +19,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Throwable.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseData<?> exceptionHandler(Throwable e, HttpServletRequest request) {
-        e.printStackTrace();
+        log.error("[GlobalExceptionHandler]: ", e);
         return new ResponseData<>(BusinessExceptionErrorEnum.SYSTEM_ERROR.getCode(), BusinessExceptionErrorEnum.SYSTEM_ERROR.getMessage());
     }
 }
