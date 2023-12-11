@@ -9,6 +9,12 @@
    选择要生成的表，点击 **提交并生成代码** 即会在项目的`com.light`目录下生成`business`目录，以及其下面对应的`controller`、`service`等全套代码，对应生成规则配置在`com.light.common.generate.Config`文件中（如表有修改选择重新生成会覆盖PO，不会覆盖`controller`等），对应生成的模板在`resources/beetl-back-end`内。生成完build下即有对应表的完整的CURD功能
 3. 常用生成配置中，缺省数据库字段名为 `deleted` 为逻辑删除字段 1/0
 
+### 多表关联查询
+简单的多表关联查询使用文档，见下：
+```
+https://github.com/yangaijun/multipleselect
+```
+
 ### 日志
 1. 在类上使用 `@Slf4j` 注解，使用的是`lombok`，所以 `IDE` 要先配置其可以使用
 2. 使用：`log.error()`

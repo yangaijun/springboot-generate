@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@MapperScan("com.light.business.*.mapper")
+@MapperScan({"com.light.common.multipleselect.mapper", "com.light.business.*.mapper"})
 @EnableBeetl
 @RestController
 @SpringBootApplication
