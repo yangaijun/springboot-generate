@@ -12,7 +12,7 @@ auth:
   passPaths: /generate/index, /sys/login  #多个以逗号分割 /sys/login, /user/get, ...
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/student_grade?useUnicode=true&characterEncoding=utf8&useSSL=false
+    url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf8&useSSL=false
     username: root
     password: 123456
     type: com.alibaba.druid.pool.DruidDataSource
